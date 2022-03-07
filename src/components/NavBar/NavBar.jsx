@@ -34,9 +34,25 @@ const NavBar = () => {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                        sx={{
+                            mr: 2,
+                            display: {
+                                xs: "none",
+                                md: "flex",
+                            },
+                        }}
                     >
-                        <div className="logo">SKATESTORE</div>
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{
+                                my: 1,
+                                color: "white",
+                                display: "block",
+                                fontSize: "1.2rem",
+                            }}
+                        >
+                            SKATESTORE
+                        </Button>
                     </Typography>
 
                     <Box
@@ -94,7 +110,17 @@ const NavBar = () => {
                             display: { xs: "flex", md: "none" },
                         }}
                     >
-                        SKATESTORE
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{
+                                my: 1,
+                                color: "white",
+                                display: "block",
+                                fontSize: "1.2rem",
+                            }}
+                        >
+                            SKATESTORE
+                        </Button>
                     </Typography>
                     <Box
                         sx={{

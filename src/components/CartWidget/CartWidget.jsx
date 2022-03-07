@@ -8,7 +8,7 @@ const CartWidget = () => {
     let itemsQty = 3;
     return (
         <IconButton size="large" color="inherit">
-            <Badge badgeContent={itemsQty} color="error">
+            <Badge badgeContent={itemsQty} color="secondary">
                 <ShoppingCartIcon />
             </Badge>
         </IconButton>

@@ -1,0 +1,26 @@
+@import "../../index.scss";
+
+.item-count-container {
+    width: 200px;
+    height: 20px;
+}
+
+.item-count-btns {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    align-items: center;
+    padding-top: 2px;
+}
+
+.count-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+}
+
+.item-count-input {
+    display: flex;
+    justify-content: center;
+}
