@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import "./ItemCount.scss";
 
+import foto from "../../images/zapas-nike.webp";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
@@ -41,7 +43,6 @@ const ItemCount = ({ initial = 3, stock = 10, onAdd }) => {
                     </ButtonBase>
                 </Box>
             )}
-
             <Button
                 fullWidth
                 size="small"
