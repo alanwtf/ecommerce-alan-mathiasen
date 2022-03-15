@@ -1,5 +1,11 @@
-import React from "react";
 import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import CartWidget from "../CartWidget/CartWidget";
+
+import "./NavBar.scss";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,21 +17,24 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
-import "./NavBar.scss";
-import CartWidget from "../CartWidget/CartWidget";
-
-const pages = ["SKATEBOARDS", "ZAPATILLAS", "ROPA"];
+const pages = ["skateboards", "zapatillas", "ropa"];
 
 const NavBar = () => {
+    let navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (path) => {
         setAnchorElNav(null);
+        navigate(path);
     };
 
+    const handleLink = (category) => {
+        setAnchorElNav(null);
+        navigate(`/category/${category}`);
+    };
     return (
         <AppBar position="static" className="navbar">
             <Container maxWidth="lg">
@@ -43,7 +52,7 @@ const NavBar = () => {
                         }}
                     >
                         <Button
-                            onClick={handleCloseNavMenu}
+                            onClick={() => handleCloseNavMenu("/")}
                             sx={{
                                 my: 1,
                                 color: "white",
@@ -92,7 +101,7 @@ const NavBar = () => {
                             {pages.map((page) => (
                                 <MenuItem
                                     key={page}
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => handleLink(page)}
                                 >
                                     <Typography textAlign="center">
                                         {page}
@@ -111,7 +120,7 @@ const NavBar = () => {
                         }}
                     >
                         <Button
-                            onClick={handleCloseNavMenu}
+                            onClick={() => navigate("/")}
                             sx={{
                                 my: 1,
                                 color: "white",
@@ -131,7 +140,7 @@ const NavBar = () => {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => handleLink(page)}
                                 sx={{ my: 2, color: "white", display: "block" }}
                             >
                                 {page}
@@ -139,7 +148,7 @@ const NavBar = () => {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0 }} onClick={() => navigate("/cart")}>
                         <CartWidget />{" "}
                     </Box>
                 </Toolbar>

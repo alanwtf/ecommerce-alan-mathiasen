@@ -1,14 +1,15 @@
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Typography,
-} from "@mui/material";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 
 const Item = ({ prod }) => {
+    let navigate = useNavigate();
+
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
@@ -24,7 +25,11 @@ const Item = ({ prod }) => {
                 <Typography variant="body2">{`$${prod.price}`}</Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" color="secondary">
+                <Button
+                    size="small"
+                    color="secondary"
+                    onClick={() => navigate(`/detail/${prod.id}`)}
+                >
                     Ver mas
                 </Button>
             </CardActions>

@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-
-import "./ItemCount.scss";
-
-import foto from "../../images/zapas-nike.webp";
+import React, { useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
+import "./ItemCount.scss";
 
-const ItemCount = ({ initial = 3, stock = 10, onAdd }) => {
+const ItemCount = ({ initial = 1, stock = 10, onAdd }) => {
     const [count, setCount] = useState(initial);
 
     const handleSubstract = () => {
@@ -25,8 +22,6 @@ const ItemCount = ({ initial = 3, stock = 10, onAdd }) => {
                   `El valor no puede ser mayor al stock. Stock disponible: ${stock}`
               );
     };
-
-    useEffect(() => setCount(initial), [initial]);
 
     return (
         <Box className="item-count-container">

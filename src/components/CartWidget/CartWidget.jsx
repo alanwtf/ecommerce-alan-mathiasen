@@ -1,8 +1,8 @@
-import { Badge, IconButton } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
 import React from "react";
-import "./CartWidget.scss";
+
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const CartWidget = () => {
     let itemsQty = 3;
