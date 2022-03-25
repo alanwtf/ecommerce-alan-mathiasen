@@ -5,9 +5,11 @@ import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 import "./ItemCount.scss";
+import { useNavigate } from "react-router-dom";
 
-const ItemCount = ({ initial = 1, stock = 10, onAdd }) => {
+const ItemCount = ({ initial = 1, stock = 5, onAdd, isInCart }) => {
     const [count, setCount] = useState(initial);
+    const navigate = useNavigate();
 
     const handleSubstract = () => {
         count > 1
@@ -23,7 +25,7 @@ const ItemCount = ({ initial = 1, stock = 10, onAdd }) => {
               );
     };
 
-    return (
+    const ShowCounter = () => (
         <Box className="item-count-container">
             {stock < 1 ? (
                 <Typography variant="subtitle2">Sin stock.</Typography>
@@ -51,6 +53,35 @@ const ItemCount = ({ initial = 1, stock = 10, onAdd }) => {
             </Button>
         </Box>
     );
+
+    const HideCounter = () => (
+        <Box className="item-count-container">
+            <Button
+                fullWidth
+                size="small"
+                variant="text"
+                color="success"
+                disabled={stock < 1}
+                onClick={() => navigate("/")}
+                sx={{ mt: 0 }}
+            >
+                Seguir Comprando
+            </Button>
+            <Button
+                fullWidth
+                size="small"
+                variant="text"
+                color="secondary"
+                disabled={stock < 1}
+                onClick={() => navigate("/cart")}
+                sx={{ mt: 1 }}
+            >
+                Ir al Carrito
+            </Button>
+        </Box>
+    );
+
+    return isInCart ? <HideCounter /> : <ShowCounter />;
 };
 
 export default ItemCount;

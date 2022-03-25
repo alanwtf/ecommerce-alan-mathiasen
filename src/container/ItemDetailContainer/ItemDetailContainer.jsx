@@ -10,24 +10,18 @@ import { getItemById } from "../../helpers/getFetch";
 import Container from "@mui/material/Container";
 
 const ItemDetailContainer = () => {
-    const { id } = useParams();
     const [item, setItem] = useState({});
     const [loading, setLoading] = useState(true);
+    const { id } = useParams();
 
     useEffect(() => {
         getItemById(id)
-            .then((res) => {
-                setItem(res);
-            })
+            .then((res) => setItem(res))
             .catch((err) => {
                 throw new Error(err);
             })
             .finally(() => setLoading(false));
     }, [id]);
-
-    useEffect(() => {
-        console.log(loading);
-    }, [loading]);
 
     return (
         <Container maxWidth="lg" sx={{ p: 4 }}>
