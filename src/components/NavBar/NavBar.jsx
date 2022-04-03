@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -16,10 +16,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 
-const pages = ["skateboards", "zapatillas", "ropa"];
+//const pages = ["skateboards", "zapatillas", "ropa"];
 
 const NavBar = () => {
+    const [pages, setPages] = useState([]);
+
     let navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -35,6 +38,19 @@ const NavBar = () => {
         setAnchorElNav(null);
         navigate(`/category/${category}`);
     };
+
+    useEffect(() => {
+        const db = getFirestore();
+        const queryCol = collection(db, "categories");
+        getDocs(queryCol)
+            .then((resp) =>
+                setPages(
+                    resp.docs.map((cat) => ({ ...cat.data(), id: cat.id }))
+                )
+            )
+            .finally();
+    });
+
     return (
         <AppBar position="static" className="navbar">
             <Container maxWidth="lg">
@@ -100,11 +116,11 @@ const NavBar = () => {
                         >
                             {pages.map((page) => (
                                 <MenuItem
-                                    key={page}
-                                    onClick={() => handleLink(page)}
+                                    key={page.id}
+                                    onClick={() => handleLink(page.name)}
                                 >
                                     <Typography textAlign="center">
-                                        {page}
+                                        {page.name}
                                     </Typography>
                                 </MenuItem>
                             ))}
@@ -139,11 +155,11 @@ const NavBar = () => {
                     >
                         {pages.map((page) => (
                             <Button
-                                key={page}
-                                onClick={() => handleLink(page)}
+                                key={page.id}
+                                onClick={() => handleLink(page.name)}
                                 sx={{ my: 2, color: "white", display: "block" }}
                             >
-                                {page}
+                                {page.name}
                             </Button>
                         ))}
                     </Box>

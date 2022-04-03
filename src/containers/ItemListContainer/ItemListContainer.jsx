@@ -5,7 +5,13 @@ import Loading from "../../components/Loading/Loading";
 
 import { useParams } from "react-router-dom";
 
-import { getFetch } from "../../helpers/getFetch";
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    where,
+} from "firebase/firestore";
 
 import Container from "@mui/material/Container";
 import "./ItemListContainer.scss";
@@ -16,19 +22,26 @@ const ItemListContainer = () => {
     const { id } = useParams();
 
     useEffect(() => {
+        setLoading(true);
+        const db = getFirestore();
+        const queryCol = collection(db, "products");
+        let queryFilter;
         if (id) {
-            getFetch
-                .then((resp) =>
-                    setProds(resp.filter((prod) => prod.category === id))
-                )
-                .catch((err) => console.log(err))
-                .finally(() => setLoading(false));
+            console.log(id);
+            queryFilter = query(queryCol, where("category", "==", id));
         } else {
-            getFetch
-                .then((resp) => setProds(resp))
-                .catch((err) => console.log(err))
-                .finally(() => setLoading(false));
+            queryFilter = query(queryCol);
         }
+        getDocs(queryFilter)
+            .then((resp) =>
+                setProds(
+                    resp.docs.map((prod) => ({
+                        id: prod.id,
+                        ...prod.data(),
+                    }))
+                )
+            )
+            .finally(() => setLoading(false));
     }, [id]);
 
     return (

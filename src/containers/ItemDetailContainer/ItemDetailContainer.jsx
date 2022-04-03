@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 import ItemDetail from "../../components/ItemDetail/ItemDetail";
 import Loading from "../../components/Loading/Loading";
 
-import { getItemById } from "../../helpers/getFetch";
-
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import Container from "@mui/material/Container";
 
 const ItemDetailContainer = () => {
@@ -15,11 +14,11 @@ const ItemDetailContainer = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        getItemById(id)
-            .then((res) => setItem(res))
-            .catch((err) => {
-                throw new Error(err);
-            })
+        const db = getFirestore();
+
+        const queryDoc = doc(db, "products", id);
+        getDoc(queryDoc)
+            .then((resp) => setItem({ id: resp.id, ...resp.data() }))
             .finally(() => setLoading(false));
     }, [id]);
 

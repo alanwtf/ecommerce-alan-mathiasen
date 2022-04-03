@@ -28,7 +28,11 @@ const ItemDetail = ({ item }) => {
                 <Typography variant="body2" sx={{ mt: 2 }}>
                     {item.description}
                 </Typography>
-                <ItemCount onAdd={onAdd} isInCart={isInCart} />
+                <ItemCount
+                    onAdd={onAdd}
+                    isInCart={isInCart}
+                    stock={item.stock}
+                />
             </Grid>
         </Grid>
     );

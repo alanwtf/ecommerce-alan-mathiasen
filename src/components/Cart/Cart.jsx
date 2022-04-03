@@ -63,10 +63,9 @@ const Cart = () => {
                                     <TableCell sx={{ py: 0 }} align="right">
                                         Precio Total
                                     </TableCell>
-                                    <TableCell
-                                        sx={{ py: 0 }}
-                                        align="right"
-                                    ></TableCell>
+                                    <TableCell sx={{ py: 0 }} align="right">
+                                        {""}
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -118,9 +117,9 @@ const Cart = () => {
                                         },
                                     }}
                                 >
-                                    <TableCell />
-                                    <TableCell />
-                                    <TableCell />
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                     <TableCell align="right">
                                         <Typography
                                             variant="h5"
@@ -141,9 +140,9 @@ const Cart = () => {
                                             }}
                                         >
                                             ${totalPrice()}
-                                        </Typography>{" "}
+                                        </Typography>
                                     </TableCell>
-                                    <TableCell />{" "}
+                                    <TableCell> </TableCell>
                                 </TableRow>
                             </TableBody>
                         </>
