@@ -7,11 +7,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
+import "./Item.scss";
+
 const Item = ({ prod }) => {
     let navigate = useNavigate();
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, height: "100%", position: "relative" }}>
             <CardMedia
                 component="img"
                 height="160"
@@ -19,12 +21,12 @@ const Item = ({ prod }) => {
                 alt="zapas"
             />
             <CardContent>
-                <Typography gutterBottom variant="h6" component="div">
-                    {prod.title}
-                </Typography>
-                <Typography variant="body2">{`$${prod.price}`}</Typography>
-            </CardContent>
-            <CardActions>
+                <div>
+                    <Typography gutterBottom variant="h6" component="div">
+                        {prod.title}
+                    </Typography>
+                    <Typography variant="body2">{`$${prod.price}`}</Typography>
+                </div>
                 <Button
                     size="small"
                     color="secondary"
@@ -32,7 +34,7 @@ const Item = ({ prod }) => {
                 >
                     Ver mas
                 </Button>
-            </CardActions>
+            </CardContent>
         </Card>
     );
 };

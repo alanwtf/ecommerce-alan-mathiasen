@@ -27,6 +27,7 @@ const ItemCount = ({ initial = 1, stock = 5, onAdd, isInCart }) => {
 
     const ShowCounter = () => (
         <Box className="item-count-container">
+            <Typography variant="caption">Stock: {stock}</Typography>
             {stock < 1 ? (
                 <Typography variant="subtitle2">Sin stock.</Typography>
             ) : (

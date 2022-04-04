@@ -1,12 +1,12 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCLR-QQegt1haU-7m3DJ0oGcfvpMBheg5Q",
-    authDomain: "skatestore-ddc64.firebaseapp.com",
-    projectId: "skatestore-ddc64",
-    storageBucket: "skatestore-ddc64.appspot.com",
-    messagingSenderId: "342912611281",
-    appId: "1:342912611281:web:9e53b424bc84d0678726f0",
+    apiKey: "AIzaSyAwKdrUsOx7pnH5zy8da00RDOHBJTcGcaY",
+    authDomain: "skatestore-b5702.firebaseapp.com",
+    projectId: "skatestore-b5702",
+    storageBucket: "skatestore-b5702.appspot.com",
+    messagingSenderId: "543351467723",
+    appId: "1:543351467723:web:1aa1b7da723d921e30754e",
 };
 
 const app = initializeApp(firebaseConfig);

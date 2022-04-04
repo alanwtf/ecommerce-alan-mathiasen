@@ -11,13 +11,15 @@ import {
     Typography,
 } from "@mui/material";
 
+import FormDialog from "../FormDialog/FormDialog";
+
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useCartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
-const Cart = () => {
+const Cart = ({ open, handleOpen, handleClose }) => {
     const { cartList, deleteById, totalPrice, clearCart, totalProducts } =
         useCartContext();
     const navigate = useNavigate();
@@ -155,7 +157,11 @@ const Cart = () => {
                         <Button sx={{ mt: 2, mr: 2 }} onClick={clearCart}>
                             Vaciar Carrito
                         </Button>
-                        <Button variant="contained" sx={{ mt: 2 }}>
+                        <Button
+                            variant="contained"
+                            sx={{ mt: 2 }}
+                            onClick={handleOpen}
+                        >
                             Finalizar Compra
                         </Button>
                     </>
