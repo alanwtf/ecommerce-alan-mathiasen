@@ -3,12 +3,13 @@ import { useState } from "react";
 import Cart from "../../components/Cart/Cart";
 import FormDialog from "../../components/FormDialog/FormDialog";
 import { useCartContext } from "../../context/CartContext";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
 
 const CartContainer = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [userData, setUserData] = useState({});
 
-    const { clearCart } = useCartContext();
+    const { clearCart, cartList, totalPrice } = useCartContext();
 
     const handleOpen = () => setOpenDialog(true);
     const handleClose = () => setOpenDialog(false);
@@ -21,9 +22,24 @@ const CartContainer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("Compra realizada con éxito!");
-        handleClose();
-        clearCart();
+        const items = cartList.map((prod) => ({
+            item: prod.title,
+            cant: prod.cant,
+            id: prod.id,
+            price: prod.price,
+        }));
+        const db = getFirestore();
+        addDoc(collection(db, "orders"), {
+            buyer: { ...userData },
+            items: { items, timestamp: Date.now(), total: totalPrice() },
+        })
+            .then((resp) =>
+                alert("Compra finalizada! Su Id de compra es: " + resp.id)
+            )
+            .finally(() => {
+                handleClose();
+                clearCart();
+            });
     };
 
     return (
@@ -31,7 +47,7 @@ const CartContainer = () => {
             <Cart handleOpen={handleOpen} />
             <FormDialog
                 open={openDialog}
-                setUserData={setUserData}
+                data={userData}
                 handleClose={handleClose}
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}

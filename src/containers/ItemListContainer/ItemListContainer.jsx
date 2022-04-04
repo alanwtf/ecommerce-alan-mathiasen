@@ -27,7 +27,6 @@ const ItemListContainer = () => {
         const queryCol = collection(db, "products");
         let queryFilter;
         if (id) {
-            console.log(id);
             queryFilter = query(queryCol, where("category", "==", id));
         } else {
             queryFilter = query(queryCol);

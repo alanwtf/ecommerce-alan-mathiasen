@@ -13,7 +13,7 @@ const FormDialog = ({
     open = false,
     handleClose,
     handleSubmit,
-    userData,
+    data,
     handleChange,
 }) => {
     return (
@@ -29,6 +29,7 @@ const FormDialog = ({
                         name="name"
                         onChange={handleChange}
                         autoFocus
+                        value={data.name}
                         margin="dense"
                         id="name"
                         label="Nombre"
@@ -40,6 +41,7 @@ const FormDialog = ({
                     <TextField
                         name="email"
                         margin="dense"
+                        value={data.email}
                         onChange={handleChange}
                         id="email"
                         label="Email Address"
@@ -51,6 +53,7 @@ const FormDialog = ({
                     <TextField
                         name="phone"
                         margin="dense"
+                        value={data.phone}
                         onChange={handleChange}
                         id="name"
                         label="Numero de Teléfono"
