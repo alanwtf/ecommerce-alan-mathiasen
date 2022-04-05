@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ItemCount from "../ItemCount/ItemCount";
 
@@ -9,13 +9,21 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 const ItemDetail = ({ item }) => {
-    const [isInCart, setIsInCart] = useState(false);
-    const { addToCart } = useCartContext();
+    const [addedToCart, setAddedToCart] = useState(false);
+    const [stockWithCart, setStockWithCart] = useState(item.stock);
+    const { addToCart, cantInCart } = useCartContext();
 
     const onAdd = (cant) => {
         addToCart({ ...item, cant: cant });
-        setIsInCart(true);
+        setAddedToCart(true);
     };
+
+    useEffect(() => {
+        if (cantInCart(item.id))
+            setStockWithCart(
+                Number(item.stock) - Number(cantInCart(item.id).cant)
+            );
+    }, [item, cantInCart]);
 
     return (
         <Grid container spacing={3}>
@@ -30,8 +38,8 @@ const ItemDetail = ({ item }) => {
                 </Typography>
                 <ItemCount
                     onAdd={onAdd}
-                    isInCart={isInCart}
-                    stock={item.stock}
+                    isInCart={addedToCart}
+                    stock={stockWithCart}
                 />
             </Grid>
         </Grid>

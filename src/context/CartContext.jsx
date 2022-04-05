@@ -38,6 +38,8 @@ const CartContextProvider = ({ children }) => {
 
     const isInCart = (id) => cartList.some((item) => item.id === id);
 
+    const cantInCart = (id) => cartList.find((item) => item.id === id);
+
     return (
         <CartContext.Provider
             value={{
@@ -48,6 +50,7 @@ const CartContextProvider = ({ children }) => {
                 totalPrice,
                 clearCart,
                 isInCart,
+                cantInCart,
             }}
         >
             {children}
