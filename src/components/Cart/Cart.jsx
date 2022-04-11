@@ -19,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useCartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
-const Cart = ({ open, handleOpen, handleClose }) => {
+const Cart = ({ handleOpen }) => {
     const { cartList, deleteById, totalPrice, clearCart, totalProducts } =
         useCartContext();
     const navigate = useNavigate();

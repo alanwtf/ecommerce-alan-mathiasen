@@ -7,7 +7,7 @@ import {
     DialogTitle,
     TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 const FormDialog = ({
     open = false,
@@ -15,6 +15,7 @@ const FormDialog = ({
     handleSubmit,
     data,
     handleChange,
+    validate,
 }) => {
     return (
         <Dialog open={open} onClose={handleClose} disablePortal>
@@ -44,7 +45,19 @@ const FormDialog = ({
                         value={data.email}
                         onChange={handleChange}
                         id="email"
-                        label="Email Address"
+                        label="Email"
+                        type="email"
+                        fullWidth
+                        variant="standard"
+                        required
+                    />
+                    <TextField
+                        name="confirmEmail"
+                        margin="dense"
+                        value={data.confirmEmail}
+                        onChange={handleChange}
+                        id="confirEmail"
+                        label="Repetir email"
                         type="email"
                         fullWidth
                         variant="standard"
@@ -62,10 +75,13 @@ const FormDialog = ({
                         variant="standard"
                         required
                     />
+                    <div>{validate.error ? validate.error : ""}</div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button type="submit">Finalizar</Button>
+                    <Button type="submit" disabled={!validate.value}>
+                        Finalizar
+                    </Button>
                 </DialogActions>
             </form>
         </Dialog>

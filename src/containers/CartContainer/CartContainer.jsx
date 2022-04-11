@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cart from "../../components/Cart/Cart";
 import FormDialog from "../../components/FormDialog/FormDialog";
 import { useCartContext } from "../../context/CartContext";
@@ -16,8 +16,13 @@ import {
 
 const CartContainer = () => {
     const [openDialog, setOpenDialog] = useState(false);
-    const [userData, setUserData] = useState({});
-
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        confirmEmail: "",
+        phone: "",
+    });
+    const [validate, setValidate] = useState({});
     const { clearCart, cartList, totalPrice } = useCartContext();
 
     const handleOpen = () => setOpenDialog(true);
@@ -28,6 +33,21 @@ const CartContainer = () => {
             [e.target.name]: e.target.value,
         });
     };
+
+    useEffect(() => {
+        if (
+            userData.name !== "" &&
+            userData.email !== "" &&
+            userData.confirmEmail !== "" &&
+            userData.phone !== ""
+        ) {
+            if (userData.email !== userData.confirmEmail)
+                setValidate({ error: "Los e-mails deben coincidir" });
+            else setValidate({ value: true, error: "" });
+        } else setValidate(false);
+        if (userData.email === userData.confirmEmail) console.log("hola");
+        console.log(userData);
+    }, [userData]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,9 +60,10 @@ const CartContainer = () => {
         }));
 
         const db = getFirestore();
-
+        const newUser = { ...userData };
+        delete newUser.confirmEmail;
         addDoc(collection(db, "orders"), {
-            buyer: { ...userData },
+            buyer: { ...newUser },
             items: { items, timestamp: Date.now(), total: totalPrice() },
         })
             .then((resp) =>
@@ -93,6 +114,7 @@ const CartContainer = () => {
                 handleClose={handleClose}
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
+                validate={validate}
             />
         </Container>
     );

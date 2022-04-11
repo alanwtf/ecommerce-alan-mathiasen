@@ -20,9 +20,7 @@ const ItemDetail = ({ item }) => {
 
     useEffect(() => {
         if (cantInCart(item.id))
-            setStockWithCart(
-                Number(item.stock) - Number(cantInCart(item.id).cant)
-            );
+            setStockWithCart(item.stock - cantInCart(item.id).cant);
     }, [item, cantInCart]);
 
     return (
