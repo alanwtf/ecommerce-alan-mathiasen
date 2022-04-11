@@ -6,8 +6,8 @@ import {
     DialogContentText,
     DialogTitle,
     TextField,
+    Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 
 const FormDialog = ({
     open = false,
@@ -16,6 +16,7 @@ const FormDialog = ({
     data,
     handleChange,
     validate,
+    total,
 }) => {
     return (
         <Dialog open={open} onClose={handleClose} disablePortal>
@@ -34,6 +35,19 @@ const FormDialog = ({
                         margin="dense"
                         id="name"
                         label="Nombre"
+                        type="string"
+                        fullWidth
+                        variant="standard"
+                        required
+                    />
+                    <TextField
+                        name="lastName"
+                        onChange={handleChange}
+                        autoFocus
+                        value={data.lastName}
+                        margin="dense"
+                        id="lastName"
+                        label="Apellido"
                         type="string"
                         fullWidth
                         variant="standard"
@@ -75,7 +89,16 @@ const FormDialog = ({
                         variant="standard"
                         required
                     />
-                    <div>{validate.error ? validate.error : ""}</div>
+                    <Typography
+                        variant="caption"
+                        sx={{ mt: 1, color: "#df4759" }}
+                    >
+                        {validate.error ? validate.error : ""}
+                    </Typography>
+                    <Typography sx={{ mt: 1 }}>
+                        Total a pagar:{" "}
+                        <span style={{ color: "#4caf50" }}>{total}</span>
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>

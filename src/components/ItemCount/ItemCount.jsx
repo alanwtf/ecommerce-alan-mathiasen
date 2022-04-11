@@ -62,7 +62,6 @@ const ItemCount = ({ initial = 1, stock = 5, onAdd, isInCart }) => {
                 size="small"
                 variant="text"
                 color="success"
-                disabled={stock < 1}
                 onClick={() => navigate("/")}
                 sx={{ mt: 0 }}
             >
@@ -73,7 +72,6 @@ const ItemCount = ({ initial = 1, stock = 5, onAdd, isInCart }) => {
                 size="small"
                 variant="text"
                 color="secondary"
-                disabled={stock < 1}
                 onClick={() => navigate("/cart")}
                 sx={{ mt: 1 }}
             >

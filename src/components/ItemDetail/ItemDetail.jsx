@@ -23,7 +23,7 @@ const ItemDetail = ({ item }) => {
             setStockWithCart(item.stock - cantInCart(item.id).cant);
     }, [item, cantInCart]);
 
-    return (
+    return item ? (
         <Grid container spacing={3}>
             <Grid item md={7} sm={12}>
                 <Box component="img" sx={{ width: "100%" }} src={item.img} />
@@ -41,6 +41,8 @@ const ItemDetail = ({ item }) => {
                 />
             </Grid>
         </Grid>
+    ) : (
+        <div>NO EXISTE ESTE ITEM</div>
     );
 };
 

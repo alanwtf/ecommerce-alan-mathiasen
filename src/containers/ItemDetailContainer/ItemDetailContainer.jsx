@@ -17,14 +17,28 @@ const ItemDetailContainer = () => {
         const db = getFirestore();
 
         const queryDoc = doc(db, "products", id);
+
         getDoc(queryDoc)
-            .then((resp) => setItem({ id: resp.id, ...resp.data() }))
-            .finally(() => setLoading(false));
+            .then((resp) => {
+                if (resp.data() === undefined) {
+                    setItem(undefined);
+                } else setItem({ id: resp.id, ...resp.data() });
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+            .catch((err) => console.log(err));
     }, [id]);
 
     return (
         <Container maxWidth="lg" sx={{ p: 4 }}>
-            {loading ? <Loading /> : <ItemDetail item={item} />}
+            {loading ? (
+                <Loading />
+            ) : item ? (
+                <ItemDetail item={item} />
+            ) : (
+                <div>No se encontró el producto.</div>
+            )}
         </Container>
     );
 };

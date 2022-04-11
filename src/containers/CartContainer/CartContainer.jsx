@@ -13,17 +13,21 @@ import {
     where,
     documentId,
 } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const CartContainer = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [userData, setUserData] = useState({
         name: "",
+        lastName: "",
         email: "",
         confirmEmail: "",
         phone: "",
     });
     const [validate, setValidate] = useState({});
     const { clearCart, cartList, totalPrice } = useCartContext();
+
+    const navigate = useNavigate();
 
     const handleOpen = () => setOpenDialog(true);
     const handleClose = () => setOpenDialog(false);
@@ -37,16 +41,19 @@ const CartContainer = () => {
     useEffect(() => {
         if (
             userData.name !== "" &&
+            userData.lastName !== "" &&
             userData.email !== "" &&
             userData.confirmEmail !== "" &&
             userData.phone !== ""
         ) {
-            if (userData.email !== userData.confirmEmail)
+            if (userData.email !== userData.confirmEmail) {
                 setValidate({ error: "Los e-mails deben coincidir" });
-            else setValidate({ value: true, error: "" });
-        } else setValidate(false);
-        if (userData.email === userData.confirmEmail) console.log("hola");
-        console.log(userData);
+            } else {
+                setValidate({ value: true, error: "" });
+            }
+        } else {
+            setValidate(false);
+        }
     }, [userData]);
 
     const handleSubmit = async (e) => {
@@ -57,6 +64,7 @@ const CartContainer = () => {
             cant: prod.cant,
             id: prod.id,
             price: prod.price,
+            description: prod.description,
         }));
 
         const db = getFirestore();
@@ -64,14 +72,20 @@ const CartContainer = () => {
         delete newUser.confirmEmail;
         addDoc(collection(db, "orders"), {
             buyer: { ...newUser },
-            items: { items, timestamp: Date.now(), total: totalPrice() },
+            items: [...items],
+            timestamp: Date.now(),
+            total: totalPrice(),
+            estado: "generada",
         })
             .then((resp) =>
-                alert("Compra finalizada! Su Id de compra es: " + resp.id)
+                alert(
+                    `Compra finalizada! Su Id de compra es: ${resp.id}, ahora sera redirigido a la página principal`
+                )
             )
             .finally(() => {
                 handleClose();
                 clearCart();
+                navigate("/");
             });
 
         const queryCollection = collection(db, "products");
@@ -115,6 +129,7 @@ const CartContainer = () => {
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
                 validate={validate}
+                total={totalPrice()}
             />
         </Container>
     );
