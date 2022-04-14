@@ -1,4 +1,8 @@
+import { useCartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
+
 import {
+    Box,
     Button,
     Grid,
     IconButton,
@@ -10,14 +14,7 @@ import {
     TableRow,
     Typography,
 } from "@mui/material";
-
-import FormDialog from "../FormDialog/FormDialog";
-
-import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-import { useCartContext } from "../../context/CartContext";
-import { useNavigate } from "react-router-dom";
 
 const Cart = ({ handleOpen }) => {
     const { cartList, deleteById, totalPrice, clearCart, totalProducts } =

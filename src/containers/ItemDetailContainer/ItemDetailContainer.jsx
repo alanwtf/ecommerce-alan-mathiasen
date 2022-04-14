@@ -20,14 +20,15 @@ const ItemDetailContainer = () => {
 
         getDoc(queryDoc)
             .then((resp) => {
-                if (resp.data() === undefined) {
-                    setItem(undefined);
-                } else setItem({ id: resp.id, ...resp.data() });
+                if (resp.data() === undefined) setItem(undefined);
+                else setItem({ id: resp.id, ...resp.data() });
             })
             .finally(() => {
                 setLoading(false);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                throw new Error(err);
+            });
     }, [id]);
 
     return (

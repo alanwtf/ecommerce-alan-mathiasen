@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import CartWidget from "../CartWidget/CartWidget";
 
-import "./NavBar.scss";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,15 +16,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-
-//const pages = ["skateboards", "zapatillas", "ropa"];
+import "./NavBar.scss";
 
 const NavBar = () => {
     const [pages, setPages] = useState([]);
+    const [anchorElNav, setAnchorElNav] = useState(null);
 
     let navigate = useNavigate();
-    const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -33,7 +31,6 @@ const NavBar = () => {
         setAnchorElNav(null);
         navigate(path);
     };
-
     const handleLink = (category) => {
         setAnchorElNav(null);
         navigate(`/category/${category}`);

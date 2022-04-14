@@ -25,6 +25,8 @@ const CartContainer = () => {
         phone: "",
     });
     const [validate, setValidate] = useState({});
+    const [successMessage, setSuccesMessage] = useState("");
+
     const { clearCart, cartList, totalPrice } = useCartContext();
 
     const navigate = useNavigate();
@@ -60,9 +62,9 @@ const CartContainer = () => {
         e.preventDefault();
 
         const items = cartList.map((prod) => ({
+            id: prod.id,
             item: prod.title,
             cant: prod.cant,
-            id: prod.id,
             price: prod.price,
             description: prod.description,
         }));
@@ -78,14 +80,12 @@ const CartContainer = () => {
             estado: "generada",
         })
             .then((resp) =>
-                alert(
-                    `Compra finalizada! Su Id de compra es: ${resp.id}, ahora sera redirigido a la página principal`
+                setSuccesMessage(
+                    `Compra finalizada! Su Id de compra es: ${resp.id}.`
                 )
             )
             .finally(() => {
-                handleClose();
                 clearCart();
-                navigate("/");
             });
 
         const queryCollection = collection(db, "products");
@@ -129,6 +129,7 @@ const CartContainer = () => {
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
                 validate={validate}
+                successMessage={successMessage}
                 total={totalPrice()}
             />
         </Container>

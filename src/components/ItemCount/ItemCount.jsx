@@ -9,20 +9,27 @@ import { useNavigate } from "react-router-dom";
 
 const ItemCount = ({ initial = 1, stock = 5, onAdd, isInCart }) => {
     const [count, setCount] = useState(initial);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleSubstract = () => {
-        count > 1
-            ? setCount(count - 1)
-            : alert("El valor no puede ser menor a 1");
+        if (count > 1) {
+            setCount(count - 1);
+            setError("");
+        } else {
+            setError("El valor no puede ser menor a 1");
+        }
     };
 
     const handleAdd = () => {
-        count < stock
-            ? setCount(count + 1)
-            : alert(
-                  `El valor no puede ser mayor al stock. Stock disponible: ${stock}`
-              );
+        if (count < stock) {
+            setCount(count + 1);
+            setError("");
+        } else {
+            setError(
+                `El valor no puede ser mayor al stock. Stock disponible: ${stock}`
+            );
+        }
     };
 
     const ShowCounter = () => (
@@ -41,6 +48,9 @@ const ItemCount = ({ initial = 1, stock = 5, onAdd, isInCart }) => {
                     </ButtonBase>
                 </Box>
             )}
+            <Typography variant="caption" sx={{ color: "#df4759" }}>
+                {error ? error : ""}
+            </Typography>
             <Button
                 fullWidth
                 size="small"
